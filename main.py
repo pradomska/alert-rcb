@@ -1,13 +1,15 @@
 import requests
 from twilio.rest import Client
+from twilio.http.http_client import TwilioHttpClient
+import os
 
 OWM_Endpoint = "https://api.openweathermap.org/data/2.5/weather"
 LATITUDE = 54.35
 LONGITUDE = 18.65
-API_KEY = "appid"
+API_KEY = os.environ.get("OWM_API_KEY")
 
-ACCOUNT_SID = "account_sid"
-AUTH_TOKEN = "auth_token"
+ACCOUNT_SID = os.environ.get("ACCOUNT_SID")
+AUTH_TOKEN = os.environ.get("AUTH_TOKEN")
 
 weather_params = {
     "lat": LATITUDE,
@@ -30,7 +32,9 @@ weather_conditions = {
     "800": "Clear sky ☀️"
 }
 
-client = Client(ACCOUNT_SID, AUTH_TOKEN)
+proxy_client = TwilioHttpClient()
+proxy_client.session.proxies = {'https': os.environ['https_proxy']}
+client = Client(ACCOUNT_SID, AUTH_TOKEN, http_client=proxy_client)
 
 if int(condition_code) == 800:
     message = client.messages.create(
