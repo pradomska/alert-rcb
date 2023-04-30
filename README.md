@@ -1,4 +1,4 @@
-# sms-sending
+# rain-alert
 
 The goal is the look at even more advanced ways of using APIs and looking at how we can authenticate ourselves with an API provider so that I can get access to more 
 precious data. Also I'm going to be looking at how I can use an API like Twilio to send SMS messages to ourselves so that I can get an alert wherever I am.
